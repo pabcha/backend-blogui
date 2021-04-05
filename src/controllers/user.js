@@ -3,18 +3,18 @@ const UserService = require('./../services/user');
 exports.getUser = async (req, res, next) => {
   try {
     const username = req.params.username;
-    const user = await UserService.get(username);
+    const account = await UserService.get(username);
 
-    if (!user) {
+    if (!account) {
       res.status(404).json({ error: 'User Not Found' });
     }
     
-    userAPI = { 
-      username: user.username, 
-      role: user.role,
-      postLimit: user.postLimit
+    user = { 
+      username: account.username, 
+      role: account.role,
+      postLimit: account.postLimit
     };
-    res.json({ success: true, data: userAPI });
+    res.json({ success: true, data: user });
   } catch (error) {
     next(error);
   }
@@ -24,9 +24,9 @@ exports.getUserPosts = async (req, res, next) => {
   try {
     const status = req.query.status || 'published';
     const username = req.params.username;
-    const user = await UserService.get(username);
+    const account = await UserService.get(username);
     
-    if (!user) {
+    if (!account) {
       res.status(404).json({ error: 'User Not Found' });
     }
     
