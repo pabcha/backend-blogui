@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 /**** Routes ****/
 const postRoutes = require('./routes/post');
 const categoryRoutes = require('./routes/category');
+const userRoutes = require('./routes/user');
 /*** Middlewares ****/
 const errorHandler = require('./middlewares/error');
 
@@ -18,6 +19,7 @@ app.use(bodyParser.json());
 
 app.use('/api/posts', postRoutes);
 app.use('/api/categories', categoryRoutes);
+app.use('/api/users', userRoutes);
 
 app.get('/', function(req, res) {
   res.send('Welcome to my api.');
