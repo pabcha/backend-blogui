@@ -41,6 +41,19 @@ class UserService {
     // because the enum_type defined
     return response.rows;
   }
+
+  static async countTodayPosts(username) {
+    const sql = `
+      SELECT 
+        COUNT(*) as "postsQuantity"
+      FROM users AS u
+        INNER JOIN posts AS p ON p.user_id = u."id"
+      WHERE u.username = $1 AND p.created_at::date = now()::date
+    `;
+    const params = [username];
+    const response = await pool.query(sql, params);
+    return response.rows[0].postsQuantity;
+  }
 }
 
 module.exports = UserService;
