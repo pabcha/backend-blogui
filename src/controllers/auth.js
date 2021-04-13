@@ -1,6 +1,6 @@
 const AuthService = require('./../services/auth');
 const UserService = require('./../services/user');
-const { hash } = require('./../utils/index');
+const hash = require('./../utils/hash');
 
 exports.login = async (req, res, next) => {
   const { username, password } = req.body;
