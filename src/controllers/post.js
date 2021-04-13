@@ -51,7 +51,7 @@ exports.storePost = async (req, res, next) => {
 
     post.cover = randomCover();
     await PostService.store(post);
-    res.status(301).json({ success: true, msg: 'Post created' });
+    res.json({ success: true, msg: 'Post created' });
   } catch (error) {
     next(error);
   }
