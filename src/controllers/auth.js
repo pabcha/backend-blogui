@@ -9,15 +9,15 @@ exports.login = async (req, res, next) => {
     const account = await UserService.get(username);
     
     if (!account) {
-      res.status(404).json({ error: 'We couldn\'t find an account matching the username you entered.' });
+      return res.status(404).json({ error: 'We couldn\'t find an account matching the username you entered.' });
     }
 
     const { role } = account;
     const passwordHash = hash(password);
     if (passwordHash !== account.password) {
-      res.status(301).json({ error: 'We couldn’t find an account matching the username and password you entered. Please check your username and password and try again.' });
+      return res.status(301).json({ error: 'We couldn’t find an account matching the username and password you entered. Please check your username and password and try again.' });
     }
-
+    
     const token = AuthService.auth({ username, role });
     res.json({
       success: true,
