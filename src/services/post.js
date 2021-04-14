@@ -86,6 +86,12 @@ class PostService {
     await pool.query(sql, params);
   }
 
+  static async delete(slug) {
+    const sql = `DELETE FROM posts WHERE slug = $1`;
+    const params = [slug];
+    await pool.query(sql, params);
+  }
+
   static async validate(post) {
     if (!post.category_id) { return { isValid: false, error: 'category is required' } }
     if (!post.title) { return { isValid: false, error: 'title is required' } }
