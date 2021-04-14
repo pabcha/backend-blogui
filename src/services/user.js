@@ -42,6 +42,28 @@ class UserService {
     return response.rows;
   }
 
+  static async getPost(username, slug) {
+    const sql = `
+      SELECT 
+        u.username,
+        c.category,
+        p.category_id as "categoryId",
+        p.title,
+        p.slug,
+        p.cover,
+        p.body,
+        p.created_at as "createdAt",
+        p.status
+      FROM users AS u
+        INNER JOIN posts AS p ON p.user_id = u."id"
+        INNER JOIN categories AS c ON c."id" = p.category_id
+      WHERE u.username = $1 and p.slug=$2
+    `;
+    const params = [username, slug];
+    const response = await pool.query(sql, params);
+    return response.rows[0];
+  }
+
   static async countTodayPosts(username) {
     const sql = `
       SELECT 

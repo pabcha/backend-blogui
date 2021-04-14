@@ -36,3 +36,20 @@ exports.getUserPosts = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getUserPost = async (req, res, next) => {
+  try {
+    const username = req.user.username; // take user logged
+    const slug = req.params.slug;
+    const account = await UserService.get(username);
+    
+    if (!account) {
+      res.status(404).json({ error: 'User Not Found' });
+    }
+    
+    const post = await UserService.getPost(username, slug);
+    res.json({ success: true, data: post });
+  } catch (error) {
+    next(error);
+  }
+};
